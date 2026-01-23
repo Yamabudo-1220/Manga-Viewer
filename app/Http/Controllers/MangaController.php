@@ -10,13 +10,13 @@ class MangaController extends Controller
 {
     public function index(){
         $response = Http::get('https://api.mangadex.org/manga', [
-        'limit' => 1,
-        'order[followedCount]' => 'desc',
-        'includes[]' => 'cover_art'
+            'limit' => 12,
+            'order[followedCount]' => 'desc',
+            'includes[]' => 'cover_art'
         ]);
-        $manga = $response -> json()['data']; 
 
-        return view(manga.index, compact('manga'));
+        $manga = $response->json()['data'];
 
-    }
+        return view('manga.index', compact('manga'));
+    }       
 }
