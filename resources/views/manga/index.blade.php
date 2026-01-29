@@ -2,45 +2,66 @@
 <html>
 <head>
     <title>Manga Viewer</title>
-    <style>
-        body {
-            background: #0f0f0f;
-            color: white;
-            font-family: Arial;
-        }
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-            gap: 20px;
-        }
-        .card {
-            background: #1a1a1a;
-            padding: 10px;
-            border-radius: 8px;
-            text-align: center;
-        }
-        img {
-            width: 100%;
-            border-radius: 5px;
-        }
-    </style>
+
+     <link rel="stylesheet" href="{{ asset('css/index.css') }}">
 </head>
 <body>
 
-<h1>🔥 Popular Manga</h1>
+<div class="container">
+    <h1 class="headline">🔥 Top 5 most Popular by Rating</h1>
+    <div class="ratingGrid">
+        @foreach ($manga as $item)
+            @php
+                $title = $item['attributes']['title']['ja'] ?? collect($item['attributes']['title'])->first();
+            @endphp
 
-<div class="grid">
-@foreach ($manga as $item)
-    @php
-        $title = $item['attributes']['title']['en']
-            ?? collect($item['attributes']['title'])->first();
-    @endphp
+            @php
+                $cover = collect($item['relationships'])->firstWhere('type', 'cover_art');
+                $coverFile = $cover['attributes']['fileName'] ?? null;
+                $coverUrl = $coverFile ? "https://uploads.mangadex.org/covers/{$item['id']}/{$coverFile}.256.jpg" : null;
+            @endphp
 
-    <div class="card">
-        <div>{{ $title }}</div>
+            <div class="card">
+                <a id="mangaTitle" href="/manga/{{ $item['id'] }}">
+                    @if ($coverUrl)
+                        <img src="{{ $coverUrl }}" alt="{{ $title }}">
+                    @else
+                        <div style="height:220px; background:#333;"></div>
+                    @endif
+
+                    <div>{{ $title }}</div>
+                </a>
+            </div>
+        @endforeach
     </div>
-@endforeach
 </div>
+<div class="container">
+    <h1 class="headline">🆕 Latest Updated Manga</h1>
+        <div class="latestUpdateGrid">
+        @foreach ($latestManga as $latestItem)
+            @php
+                $latestTitle = $latestItem['attributes']['title']['ja'] ?? collect($latestItem['attributes']['title'])->first();
+            @endphp
 
+            @php
+                $cover = collect($latestItem['relationships'])->firstWhere('type', 'cover_art');
+                $coverFile = $cover['attributes']['fileName'] ?? null;
+                $coverUrl = $coverFile ? "https://uploads.mangadex.org/covers/{$item['id']}/{$coverFile}.256.jpg" : null;
+            @endphp
+
+            <div class="latestUpdateCard">
+                <a id="mangaTitle" href="/manga/{{ $latestItem['id'] }}">
+                    @if ($coverUrl)
+                        <img src="{{ $coverUrl }}" alt="{{ $latestTitle }}">
+                    @else
+                        <div style="height:220px; background:#333;"></div>
+                    @endif
+
+                    <div>{{ $latestTitle }}</div>
+                </a>
+            </div>
+        @endforeach
+    </div>
+</div>
 </body>
 </html>

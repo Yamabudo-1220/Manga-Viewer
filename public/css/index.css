@@ -1,0 +1,59 @@
+body {
+    background: #0f0f0f;
+    color: white;
+    font-family: Arial;
+}
+
+.container {
+    border: 3px solid purple;
+    border-radius: 15px;
+    padding: 15px;
+    width: 60%;
+    margin: 20px;
+}
+
+.ratingGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 20px;
+}
+
+.card {
+    background: #1a1a1a;
+    padding: 10px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+img {
+    width: 100%;
+    border-radius: 5px;
+}
+
+#mangaTitle {
+    text-decoration: none;
+    color: white;
+}
+
+.latestUpdateGrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.latestUpdateCard  {
+    background: #1a1a1a;
+    padding: 15px;
+    border: 1px solid purple;
+    border-radius: 8px;
+    text-align: center;
+    width: 93%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+.latestUpdateCard img {
+    width: 50%;
+    border-radius: 5px;
+}
